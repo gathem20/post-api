@@ -3,10 +3,7 @@ const path = require("path");
 const dot_env = require("dotenv");
 dot_env.config({ path: path.join(__dirname, ".env") });
 const data = process.env.data;
-const connect = mongoose.connect(data, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const connect = mongoose.connect(data);
 connect
   .then(() => {
     console.log("db is connected");
