@@ -43,9 +43,9 @@ app.post("/post", async (req, res) => {
     //   fileName: "",
     // });
     const { name, description, image } = req.body;
-    const users = { name, description, image };
-    const id = Object.keys(users).length + 1;
-    users.id = id;
+
+    const id = userss.length + 1;
+    const users = { name, description, image, id };
     const data = await database.insertMany({
       id,
       name,
@@ -53,7 +53,7 @@ app.post("/post", async (req, res) => {
       image,
     });
 
-    data.push(users);
+    userss.push(users);
     console.log(data);
     res.json({ name, description, image });
   } catch (err) {
@@ -70,30 +70,14 @@ app.patch("/patch/:id", (req, res) => {
   if (!user) {
     return res.status(404).json({ message: "User not found" });
   } else {
+    user.id;
     user.name = name;
     user.description = description;
     user.image = image;
   }
   res.json(user);
 });
-// app.patch("/patch/:id", async (req, res) => {
-//   try {
 
-//     const postId = database.Types.ObjectId(req.params.id);
-//     const updates = req.body;
-//     const updatedPost = await database.findOneAndUpdate(
-//       { _id: postId },
-//       { $set: updates },
-//       { new: true }
-//     );
-//     if (!updatedPost)
-//       return res.status(404).json({ message: "Failed to update the post" });
-//     res.json(updatedPost);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: "Failed to update the post2" });
-//   }
-// });
 //ending patch api
 const port = 3000;
 app.listen(port, (req, res) => {
